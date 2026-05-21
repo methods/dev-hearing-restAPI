@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.dto;
+package uk.gov.hmcts.reform.demo.dto;
 
 
 import java.time.OffsetDateTime;

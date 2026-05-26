@@ -5,11 +5,7 @@ plugins {
   id 'org.springframework.boot' version '3.5.5'
   id 'com.github.ben-manes.versions' version '0.52.0'
   id 'org.sonarqube' version '6.3.1.5724'
-  /*
-    Applies analysis tools including checkstyle and OWASP Dependency checker.
-    See https://github.com/hmcts/gradle-java-plugin
- */
-  id 'uk.gov.hmcts.java' version '0.12.67'
+  // TODO: need to add checkstyle
 }
 
 application {
@@ -119,10 +115,6 @@ dependencyUpdates {
   }
 }
 
-// https://jeremylong.github.io/DependencyCheck/dependency-check-gradle/configuration.html
-dependencyCheck {
-  suppressionFile = 'config/owasp/suppressions.xml'
-}
 
 repositories {
   mavenLocal()

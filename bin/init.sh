@@ -21,12 +21,12 @@ slug="$product_name-$component_name"
 declare -a files_with_port=(.env Dockerfile README.md src/main/resources/application.yaml charts/rpe-spring-boot-template/values.yaml)
 declare -a files_with_slug=(build.gradle docker-compose.yml Dockerfile README.md ./infrastructure/main.tf ./src/main/java/uk/gov/hmcts/reform/demo/controllers/RootController.java charts/rpe-spring-boot-template/Chart.yaml)
 
-# Replace in CNP file
-for i in "Jenkinsfile_template"
-do
-  perl -i -pe "s/rpe/$product_name/g" ${i}
-  perl -i -pe "s/demo/$component_name/g" ${i}
-done
+## Replace in CNP file
+#for i in "Jenkinsfile_template"
+#do
+#  perl -i -pe "s/rpe/$product_name/g" ${i}
+#  perl -i -pe "s/demo/$component_name/g" ${i}
+#done
 
 # Replace image repo
 for i in "charts/rpe-spring-boot-template/values.yaml"
@@ -49,12 +49,12 @@ do
   perl -i -pe "s/reform.demo/reform.$package/g" ${i}
 done
 
-# Update app insights
-for i in "lib/applicationinsights.json"
-do
-  perl -i -pe "s/rpe/$product_name/g" ${i}
-  perl -i -pe "s/demo/$component_name/g" ${i}
-done
+## Update app insights
+#for i in "lib/applicationinsights.json"
+#do
+#  perl -i -pe "s/rpe/$product_name/g" ${i}
+#  perl -i -pe "s/demo/$component_name/g" ${i}
+#done
 
 # Replace port number
 for i in ${files_with_port[@]}

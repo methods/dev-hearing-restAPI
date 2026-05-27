@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.demo.entities;
+package uk.gov.hmcts.reform.dataViewstoreRestApi.entities;
 
 
 import jakarta.persistence.Column;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "hearing", schema = "public")
 @NoArgsConstructor()
-public class HearingEntity {
+public class Hearing {
 
     @Id
     @Column(name = "id", nullable = false)

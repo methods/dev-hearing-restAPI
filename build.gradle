@@ -9,7 +9,7 @@ plugins {
 }
 
 application {
-  mainClass = 'uk.gov.hmcts.reform.demo.Application'
+  mainClass = 'uk.gov.hmcts.reform.dataViewstoreRestApi.Application'
   group = 'uk.gov.hmcts.reform'
   version = '0.0.1'
 }
@@ -98,8 +98,8 @@ tasks.check.dependsOn(integration)
 
 sonarqube {
   properties {
-    property "sonar.projectName", "Reform :: spring-boot-template"
-    property "sonar.projectKey", "uk.gov.hmcts.reform:spring-boot-template"
+    property "sonar.projectName", "Reform :: mi-dev"
+    property "sonar.projectKey", "uk.gov.hmcts.reform:mi-dev"
   }
 }
 
@@ -158,7 +158,7 @@ dependencies {
 }
 
 bootJar {
-  archiveFileName = "spring-boot-template.jar"
+  archiveFileName = "mi-dev.jar"
 
   manifest {
     attributes('Implementation-Version': project.version.toString())

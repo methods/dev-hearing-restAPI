@@ -17,12 +17,12 @@ management:
         include: health, info, prometheus
 
 springdoc:
-  packagesToScan: uk.gov.hmcts.reform.demo.controllers
+  packagesToScan: uk.gov.hmcts.reform.dataViewstoreRestApi.controllers
   writer-with-order-by-keys: true
 
 spring:
   config:
-    import: "optional:configtree:/mnt/secrets/rpe/"
+    import: "optional:configtree:/mnt/secrets/mi/"
   application:
     name: Spring Boot Template
 #  datasource:

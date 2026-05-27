@@ -22,3 +22,6 @@ bin/main/application.yaml
 .DS_Store
 
 *.log
+
+application-integration.yml
+application-test.yml

@@ -1,0 +1,85 @@
+package uk.gov.hmcts.reform.dataViewStoreRestApi.service;
+
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import uk.gov.hmcts.reform.dataViewstoreRestApi.dto.HearingResponse;
+import uk.gov.hmcts.reform.dataViewstoreRestApi.entities.Hearing;
+import uk.gov.hmcts.reform.dataViewstoreRestApi.repository.HearingRepository;
+import uk.gov.hmcts.reform.dataViewstoreRestApi.service.HearingService;
+
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class HearingServiceTest {
+
+    @Mock
+    private HearingRepository mockRepository;
+
+    @InjectMocks
+    private HearingService service;
+
+    // ======================================================================
+    // A utility method for creating test Hearing entity objects
+    // ======================================================================
+    private Hearing createHearing(UUID id) {
+
+        OffsetDateTime testDateTime = OffsetDateTime.parse("2024-01-01T10:00:00Z");
+        LocalDate startDate = LocalDate.of(2024, 1, 1);
+        LocalDate endDate = LocalDate.of(2024, 6, 12);
+
+
+        return new Hearing(
+            id,
+            UUID.randomUUID(),      // judiciaryId
+            UUID.randomUUID(),      // hearingTypeId
+            UUID.randomUUID(),      // courtId
+            testDateTime,           // lastModifiedTs
+            UUID.randomUUID(),      // courtRoomId
+            35,                     // estimatedMins
+            "TestJurisdiction",     // jurisdictionType
+            testDateTime,           // hearingAllocatedTs
+            testDateTime,           // hearingInitiatedTs
+            testDateTime,           // hearingResultsAddedTs
+            testDateTime,           // lastUpdatedTs
+            "English",              // hearingLanguage
+            true,                   // boxHearing
+            testDateTime,           // hearingListedTs
+            startDate,              // weekCommenceStartDate
+            endDate,                // weekCommenceEndDate
+            12,                     // weekCommenceDuration
+            false,                  // duplicateFlag
+            false,                  // deletedFlag
+            true                 // weekCommenceDateRemoved
+        );
+    }
+
+    @Test
+    void shouldReturnAllHearingsMappedToDtos() {
+
+        UUID id = UUID.randomUUID();
+        Hearing hearingEntity = createHearing(id);
+        when(mockRepository.findAll()).thenReturn(List.of(hearingEntity));
+
+        // Act
+        List<HearingResponse> results = service.getAllHearings();
+
+        assertThat(results).isNotNull();
+        assertThat(results).hasSize(1);
+
+        assertThat(results.get(0).id()).isEqualTo(id);
+        assertThat(results.get(0).lastModified()).isNotNull();
+
+    }
+
+
+}

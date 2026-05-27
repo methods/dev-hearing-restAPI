@@ -16,7 +16,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "hearing", schema = "public")
 @NoArgsConstructor()
-public class HearingEntity {
+public class Hearing {
 
     @Id
     @Column(name = "id", nullable = false)

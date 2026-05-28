@@ -31,7 +31,7 @@ public class HearingService {
     private HearingResponse mapToDto( Hearing hearingEntity) {
         return new HearingResponse(
             hearingEntity.getId(),
-            hearingEntity.getLastUpdatedTs()
+            hearingEntity.getLastModifiedTs()
         );
     }
 

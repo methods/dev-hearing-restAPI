@@ -31,7 +31,7 @@ class HearingServiceTest {
     // ======================================================================
     // A utility method for creating test Hearing entity objects
     // ======================================================================
-    private Hearing createHearing(UUID id) {
+    private Hearing createHearing(UUID id, OffsetDateTime lastModified) {
 
         OffsetDateTime testDateTime = OffsetDateTime.parse("2024-01-01T10:00:00Z");
         LocalDate startDate = LocalDate.of(2024, 1, 1);
@@ -43,7 +43,7 @@ class HearingServiceTest {
             UUID.randomUUID(),      // judiciaryId
             UUID.randomUUID(),      // hearingTypeId
             UUID.randomUUID(),      // courtId
-            testDateTime,           // lastModifiedTs
+            lastModified,           // lastModifiedTs
             UUID.randomUUID(),      // courtRoomId
             35,                     // estimatedMins
             "TestJurisdiction",     // jurisdictionType
@@ -67,7 +67,8 @@ class HearingServiceTest {
     void shouldReturnAllHearingsMappedToDtos() {
 
         UUID id = UUID.randomUUID();
-        Hearing hearingEntity = createHearing(id);
+        OffsetDateTime lastModified = OffsetDateTime.parse("2024-01-01T10:00:00Z");
+        Hearing hearingEntity = createHearing(id, lastModified);
         when(mockRepository.findAll()).thenReturn(List.of(hearingEntity));
 
         List<HearingResponse> results = service.getAllHearings();
@@ -90,6 +91,26 @@ class HearingServiceTest {
 
         assertThat(results).isEmpty();
         assertThat(results).hasSize(0);
+    }
+
+    // null check test
+    @Test
+    void shouldMapHearingToDtoEvenWhenHearingTypeIsNull() {
+
+        UUID id = UUID.randomUUID();
+        OffsetDateTime lastModified = null;
+        Hearing hearingEntity = createHearing(id, lastModified);
+        System.out.println("ID: " + hearingEntity.getId());
+        System.out.println("LAST MODIFIED: " + hearingEntity.getLastModifiedTs()); // Use your actual getter name
+        System.out.println("ALLOCATED TS: " + hearingEntity.getHearingAllocatedTs());
+        when(mockRepository.findAll()).thenReturn(List.of(hearingEntity));
+
+        List<HearingResponse> results = service.getAllHearings();
+
+        assertThat(results).isNotEmpty();
+        assertThat(results.get(0).id()).isEqualTo(id);
+        assertThat(results.get(0).lastModified()).isNull();
+
     }
 
 

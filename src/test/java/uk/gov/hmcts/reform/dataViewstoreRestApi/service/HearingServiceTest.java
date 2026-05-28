@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.hmcts.reform.dataViewstoreRestApi.dto.HearingDetailedResponse;
 import uk.gov.hmcts.reform.dataViewstoreRestApi.dto.HearingResponse;
 import uk.gov.hmcts.reform.dataViewstoreRestApi.entities.Hearing;
+import uk.gov.hmcts.reform.dataViewstoreRestApi.exception.HearingNotFoundException;
 import uk.gov.hmcts.reform.dataViewstoreRestApi.repository.HearingRepository;
 
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -157,6 +159,21 @@ class HearingServiceTest {
             assertThat(result.lastModifiedTs()).isEqualTo(lastModified);
 
         }
+
+        @Test
+        void shouldThrowHearingNotFoundExceptionWhenHearingDoesNotExist() {
+            // GIVEN a valid id not linked to a Hearing
+            UUID id = UUID.randomUUID();
+            // AND a mockRepository configured to return an empty Optional
+            when(mockRepository.findById(id)).thenReturn(Optional.empty());
+
+            // WHEN requesting a hearing with this id THEN an exception should be thrown
+            assertThatThrownBy(() -> service.getHearingById(id))
+                .isInstanceOf(HearingNotFoundException.class)
+                .hasMessageContaining(id.toString());
+
+        }
+
     }
 
 

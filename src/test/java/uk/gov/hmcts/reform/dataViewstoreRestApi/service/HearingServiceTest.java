@@ -1,18 +1,23 @@
 package uk.gov.hmcts.reform.dataViewstoreRestApi.service;
 
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import uk.gov.hmcts.reform.dataViewstoreRestApi.dto.HearingDetailedResponse;
 import uk.gov.hmcts.reform.dataViewstoreRestApi.dto.HearingResponse;
 import uk.gov.hmcts.reform.dataViewstoreRestApi.entities.Hearing;
 import uk.gov.hmcts.reform.dataViewstoreRestApi.repository.HearingRepository;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -125,6 +130,33 @@ class HearingServiceTest {
         assertThat(results.get(0).id()).isEqualTo(id);
         assertThat(results.get(0).lastModified()).isNull();
 
+    }
+
+    // Tests for getById
+
+    @Nested
+    class GetById {
+
+        @Test
+        void shouldReturnHearingDetailedResponseWhenHearingExists() {
+            // GIVEN a valid Hearing entity
+            UUID id = UUID.randomUUID();
+            OffsetDateTime lastModified = OffsetDateTime.parse("2024-01-01T10:00:00Z");
+            Hearing hearing = createHearing(id, lastModified);
+            // AND a mockRepository configured to return it when queried
+            when(mockRepository.findById(id)).thenReturn(Optional.of(hearing));
+
+            // WHEN requesting a hearing by id
+            HearingDetailedResponse result = service.getHearingById(id);
+
+            // THEN the result should exist
+            assertThat(result).isNotNull();
+            // AND the id should match the queried id
+            assertThat(result.id()).isEqualTo(id);
+            // AND the timestamp should match
+            assertThat(result.lastModifiedTs()).isEqualTo(lastModified);
+
+        }
     }
 
 

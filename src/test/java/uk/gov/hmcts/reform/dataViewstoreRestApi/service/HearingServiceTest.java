@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.dataViewStoreRestApi.service;
+package uk.gov.hmcts.reform.dataViewstoreRestApi.service;
 
 
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.hmcts.reform.dataViewstoreRestApi.dto.HearingResponse;
 import uk.gov.hmcts.reform.dataViewstoreRestApi.entities.Hearing;
 import uk.gov.hmcts.reform.dataViewstoreRestApi.repository.HearingRepository;
-import uk.gov.hmcts.reform.dataViewstoreRestApi.service.HearingService;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;

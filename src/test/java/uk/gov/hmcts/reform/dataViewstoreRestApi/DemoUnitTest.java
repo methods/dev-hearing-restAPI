@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.dataViewStoreRestApi;
+package uk.gov.hmcts.reform.dataViewstoreRestApi;
 
 import org.junit.jupiter.api.Test;
 

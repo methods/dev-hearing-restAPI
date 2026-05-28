@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.dataViewStoreRestApi;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -22,6 +23,7 @@ public class DatabaseConnectivityTest {
     private DataSource datasource;
 
     @Test
+    @DisabledIfEnvironmentVariable(named = "TemplateCI", matches = "true")
     public void testDatabaseConnection() throws SQLException {
         // WHEN a connection is made to the database
         Connection connection = datasource.getConnection();

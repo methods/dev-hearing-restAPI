@@ -59,7 +59,7 @@ class HearingServiceTest {
             12,                     // weekCommenceDuration
             false,                  // duplicateFlag
             false,                  // deletedFlag
-            true                 // weekCommenceDateRemoved
+            true                    // weekCommenceDateRemoved
         );
     }
 
@@ -70,7 +70,6 @@ class HearingServiceTest {
         Hearing hearingEntity = createHearing(id);
         when(mockRepository.findAll()).thenReturn(List.of(hearingEntity));
 
-        // Act
         List<HearingResponse> results = service.getAllHearings();
 
         assertThat(results).isNotNull();
@@ -79,6 +78,18 @@ class HearingServiceTest {
         assertThat(results.get(0).id()).isEqualTo(id);
         assertThat(results.get(0).lastModified()).isNotNull();
 
+    }
+
+    // Sad path test
+    @Test
+    void shouldReturnEmptyListWhenNoHearingsFound() {
+
+        when(mockRepository.findAll()).thenReturn(List.of());
+
+        List<HearingResponse> results = service.getAllHearings();
+
+        assertThat(results).isEmpty();
+        assertThat(results).hasSize(0);
     }
 
 

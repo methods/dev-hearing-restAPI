@@ -81,6 +81,23 @@ class HearingServiceTest {
 
     }
 
+    @Test
+    void shouldHandleAndMapMultipleHearingsSuccessfully() {
+        // Arrange
+        Hearing h1 = createHearing(UUID.randomUUID(), OffsetDateTime.now());
+        Hearing h2 = createHearing(UUID.randomUUID(), OffsetDateTime.now());
+
+        when(mockRepository.findAll()).thenReturn(List.of(h1, h2));
+
+        // Act
+        List<HearingResponse> results = service.getAllHearings();
+
+        // Assert
+        assertThat(results).hasSize(2);
+        assertThat(results.get(0).id()).isEqualTo(h1.getId());
+        assertThat(results.get(1).id()).isEqualTo(h2.getId());
+    }
+
     // Sad path test
     @Test
     void shouldReturnEmptyListWhenNoHearingsFound() {
@@ -100,9 +117,7 @@ class HearingServiceTest {
         UUID id = UUID.randomUUID();
         OffsetDateTime lastModified = null;
         Hearing hearingEntity = createHearing(id, lastModified);
-        System.out.println("ID: " + hearingEntity.getId());
-        System.out.println("LAST MODIFIED: " + hearingEntity.getLastModifiedTs()); // Use your actual getter name
-        System.out.println("ALLOCATED TS: " + hearingEntity.getHearingAllocatedTs());
+
         when(mockRepository.findAll()).thenReturn(List.of(hearingEntity));
 
         List<HearingResponse> results = service.getAllHearings();

@@ -23,7 +23,6 @@ public class DatabaseConnectivityTest {
     private DataSource datasource;
 
     @Test
-    @DisabledIfEnvironmentVariable(named = "CI", matches = "true")
     public void testDatabaseConnection() throws SQLException {
         // WHEN a connection is made to the database
         Connection connection = datasource.getConnection();

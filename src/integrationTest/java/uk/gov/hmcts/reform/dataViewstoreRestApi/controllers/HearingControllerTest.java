@@ -48,4 +48,15 @@ class HearingControllerTest {
             .andExpect(jsonPath("$[0].hearingTypeId").doesNotExist());
 
     }
+
+    @Test
+    void shouldReturnOkAndEmptyListWhenNoHearingsExist() throws Exception {
+        when(service.getAllHearings()).thenReturn(List.of());
+
+        mockMvc.perform(get("/hearings"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType("application/json"))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
 }

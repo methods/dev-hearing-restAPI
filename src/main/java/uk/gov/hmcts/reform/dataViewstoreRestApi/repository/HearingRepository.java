@@ -10,8 +10,6 @@ import java.util.UUID;
 public interface HearingRepository extends JpaRepository<Hearing, UUID> {
 
 
-    List<Hearing> findAll();
-
 
 }
 
